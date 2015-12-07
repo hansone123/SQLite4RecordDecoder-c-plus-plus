@@ -3,15 +3,20 @@ include config.mk
 
 
 SRC = \
-    $(TOP)/src/rd.cc
+    $(TOP)/src/rd.cc \
+    $(TOP)/src/main.cc
 HDR = \
     $(TOP)/src/rd.h
+OBJ = \
+    $(TOP)/obj/rd.o
 
 
-
-all:	test$(EXE)
+all:	rd.o test$(EXE)
 	
-test$(EXE):	$(SRC) $(HDR)
+rd.o:	$(SRC) $(HDR)
+	g++ -o ./obj/rd.o $(SRC) $(HDR)
+	
+test$(EXE): $(OBJ) $(HDR)
 	g++ -o test$(EXE) $(SRC) $(HDR)
 	
 clean:
