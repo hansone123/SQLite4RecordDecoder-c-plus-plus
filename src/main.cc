@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     unsigned char buf[9];
     memset(buf, 0, 9);
     RecordDecoder a;
-    int n = a.sqlite4PutVarint64(buf, 102400);
+    int n = a.MakeVarint64(buf, 102400);
     cout<<n;
     for (int i=0; i<n;i++){
         printf("%d,",buf[i]);

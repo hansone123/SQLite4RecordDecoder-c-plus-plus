@@ -58,7 +58,7 @@ void RecordDecoder::varintWrite32(unsigned char *z, unsigned int y)
   z[2] = (unsigned char)(y>>8);
   z[3] = (unsigned char)(y);
 }
-int RecordDecoder::sqlite4PutVarint64(unsigned char *z, uint64 x)
+int RecordDecoder::MakeVarint64(unsigned char *z, uint64 x)
 {
   unsigned int w, y;
   if( x<=240 ){
