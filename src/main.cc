@@ -67,5 +67,5 @@ int main(int argc, char** argv) {
 
 void showChar(char *z, int n){
      for (int i=0; i<n;i++)
-        printf("%d,",z[i]);
+        printf("%x,",z[i]);
 }

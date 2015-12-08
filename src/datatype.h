@@ -18,6 +18,12 @@
 typedef unsigned char uchar;
 typedef unsigned long long int uint64;
 typedef long long int int64;
+struct real_num {
+  unsigned char sign;     /* Sign of the overall value */
+  unsigned char approx;   /* True if the value is approximate */
+  short e;                /* The exponent. */
+  uint64 m;       /* The significant */
+};
 
 #endif /* DATATYPE_H */
 
