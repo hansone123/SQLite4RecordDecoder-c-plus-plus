@@ -16,30 +16,50 @@
 #include "rd.h"
 #include <iostream>
 #include <string.h>
+#include "../include/leveldb/db.h"
+
 using namespace std;
 
+void showChar(char *z, int n);
 /*
  * 
  */
 int main(int argc, char** argv) {
     using namespace std;
     
+    //create leveldb
+    leveldb::DB* db;
+    leveldb::Options options;
+    options.create_if_missing = true;
+    leveldb::Status status = leveldb::DB::Open(options, "./testdb", &db);
+    assert(status.ok());
     
-    cout<<"Start Varint Test!!"<<endl;
-    unsigned char buf[9];
-    memset(buf, 0, 9);
-    RecordDecoder a;
-    int n = a.MakeVarint64(buf, 102400);
-    cout<<n;
-    for (int i=0; i<n;i++){
-        printf("%d,",buf[i]);
+    //Get every kv
+    leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
+    for (it->SeekToFirst(); it->Valid(); it->Next()) {
+        char *key = (char *)it->key().data();
+        char *val = (char *)it->value().data();
+        int keyn = it->key().size();
+        int valn = it->value().size();
+        cout<<"Key: ";
+        showChar(key, keyn);
+        cout<<"\nVal: ";
+        showChar(val, valn);
+        cout<<endl;
+        
+        uint64 tid;
+        uint64 hdrlen;
+        TypChg::GetVarint64((uchar *)key, keyn, &tid);
+        cout<<"table_id: "<<tid<<"\n";
+        TypChg::GetHeader((uchar*)val, valn);
     }
-    uint64 *num = new uint64();
-    int n2;
-    n2 = a.GetVarint64(buf, n, num);
     
-    cout<<n2<<endl;
-    cout<<*num;
+    delete db;
+    
     return 0;
 }
 
+void showChar(char *z, int n){
+     for (int i=0; i<n;i++)
+        printf("%d,",z[i]);
+}

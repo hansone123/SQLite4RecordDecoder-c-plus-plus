@@ -2,14 +2,35 @@
 #include <stdio.h>
 #include <iostream>
 #include <string.h>
+#include "ErrMsg.h"
 
-
-int RecordDecoder::GetVarint64(
-  const unsigned char *z,
-  int n,
-  uint64 *pResult
-)
-{
+using namespace std;
+int TypChg::GetHeader(uchar *z, int n){
+    
+    uint64 type;
+    uint64 subtype;
+    uint64 lenHdr;
+    
+    int startHdr;    
+    int endHdr;
+    int rc;
+    int ofst;
+    //Get header
+    if( !z ) return ErrRecord;
+    
+    startHdr = TypChg::GetVarint64(z, n, &lenHdr);
+    endHdr = lenHdr + startHdr;
+    
+    if (endHdr > n) return ErrHdr;  
+    
+    for (ofst=startHdr; ofst<endHdr;) {
+        ofst += TypChg::GetVarint64(z+ofst, n, &type);
+        cout<<"type: "<<type<<endl;
+    }
+    
+    return GetHdrOK;
+}
+int TypChg::GetVarint64(uchar *z,int n,uint64 *pResult){
   unsigned int x;
   if( n<1 ) return 0;
   if( z[0]<=240 ){
@@ -51,15 +72,7 @@ int RecordDecoder::GetVarint64(
                (0xffffffff & ((z[5]<<24) + (z[6]<<16) + (z[7]<<8) + z[8]));
   return 9;
 }
-void RecordDecoder::varintWrite32(unsigned char *z, unsigned int y)
-{
-  z[0] = (unsigned char)(y>>24);
-  z[1] = (unsigned char)(y>>16);
-  z[2] = (unsigned char)(y>>8);
-  z[3] = (unsigned char)(y);
-}
-int RecordDecoder::MakeVarint64(unsigned char *z, uint64 x)
-{
+int TypChg::PutVarint64(uchar *z, const uint64 x){
   unsigned int w, y;
   if( x<=240 ){
     z[0] = (unsigned char)x;
@@ -117,4 +130,11 @@ int RecordDecoder::MakeVarint64(unsigned char *z, uint64 x)
   varintWrite32(z+1, w);
   varintWrite32(z+5, y);
   return 9;
+}
+
+void TypChg::varintWrite32(uchar *z, unsigned int y){
+  z[0] = (unsigned char)(y>>24);
+  z[1] = (unsigned char)(y>>16);
+  z[2] = (unsigned char)(y>>8);
+  z[3] = (unsigned char)(y);
 }

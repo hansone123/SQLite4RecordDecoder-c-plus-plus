@@ -4,23 +4,28 @@ include config.mk
 
 SRC = \
     $(TOP)/src/rd.cc \
-    $(TOP)/src/main.cc
+
 HDR = \
-    $(TOP)/src/rd.h
+    $(TOP)/src/rd.h \
+    $(TOP)/src/ErrMsg.h \
+    $(TOP)/src/datatype.h
+
 OBJ = \
     $(TOP)/obj/rd.o
+OBJLIST = \
+    rd.o
 
-
-all:	rd.o test$(EXE)
+all:	$(OBJLIST) test
 	
-rd.o:	$(SRC) $(HDR)
-	g++ -o ./obj/rd.o $(SRC) $(HDR)
+rd.o:
+	g++ -o $(TOP)/obj/rd.o -c $(TOP)/src/rd.cc $(HDR) 
 	
-test$(EXE): $(OBJ) $(HDR)
-	g++ -o test$(EXE) $(SRC) $(HDR)
+test:
+	g++ -o $(TOP)/test$(EXE) $(TOP)/src/main.cc $(HDR) $(SRC) $(LIBLEVELDB)
 	
 clean:
-	rm test$(EXE)
+	rm $(TOP)/test$(EXE)
+	rm $(TOP)/obj/*
 	
 run:
 	./test$(EXE)

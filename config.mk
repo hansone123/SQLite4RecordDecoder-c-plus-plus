@@ -1,6 +1,6 @@
-TOP := .
+TOP =.
 EXE =.exe
-
+LIBLEVELDB = -lpthread -lleveldb
 
 
 

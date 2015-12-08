@@ -1,11 +1,16 @@
 
-typedef unsigned long long int uint64;
+#include "datatype.h"
 
-class RecordDecoder {
+class TypChg{  
 public:
-    int GetHeader(unsigned char *z, int n);
-    int MakeVarint64(unsigned char *z, uint64 x);
-    int GetVarint64(const unsigned char *z ,int n ,uint64 *pResult);
-private:
-    void varintWrite32(unsigned char *z, unsigned int y);
+    static int GetHeader(uchar *z, int n);
+    static int PutVarint64(uchar *z,uint64 x);
+    static int GetVarint64(uchar *z ,int n ,uint64 *pResult);
+private:    
+    static void varintWrite32(uchar *z, unsigned int y);
+};
+class ErrMsg {
+public:
+    int set();
+    int show();
 };
