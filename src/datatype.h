@@ -14,8 +14,10 @@
 #ifndef DATATYPE_H
 #define DATATYPE_H
 
+
 typedef unsigned char uchar;
 typedef unsigned long long int uint64;
+typedef long long int int64;
 
 #endif /* DATATYPE_H */
 

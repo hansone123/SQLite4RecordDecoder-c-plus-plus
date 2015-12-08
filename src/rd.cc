@@ -28,7 +28,7 @@ int RecordDecoder::GetHeader(uchar *z, int n){
         ofst += TypChg::GetVarint64(z+ofst, n, &type);
         cout<<"type("<<type<<")"<<": ";        
         
-        if( type>=22 ){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         /* STRING, BLOB, KEY, and TYPED */
+        if( type>=22 ){         /* KEY, STRING, BLOB, and TYPED */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            /* STRING, BLOB, KEY, and TYPED */
             subtype = (type-22)%4;
             if( subtype==2 ){
                 size=0;

@@ -36,6 +36,8 @@ int main(int argc, char** argv) {
     
     //Get every kv
     leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
+    char *tmp;
+    int n;
     for (it->SeekToFirst(); it->Valid(); it->Next()) {
         
         char *key = (char *)it->key().data();
