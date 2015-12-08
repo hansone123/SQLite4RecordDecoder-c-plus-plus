@@ -37,6 +37,7 @@ int main(int argc, char** argv) {
     //Get every kv
     leveldb::Iterator* it = db->NewIterator(leveldb::ReadOptions());
     for (it->SeekToFirst(); it->Valid(); it->Next()) {
+        
         char *key = (char *)it->key().data();
         char *val = (char *)it->value().data();
         int keyn = it->key().size();
@@ -49,9 +50,12 @@ int main(int argc, char** argv) {
         
         uint64 tid;
         uint64 hdrlen;
-        TypChg::GetVarint64((uchar *)key, keyn, &tid);
+        RecordDecoder::GetTableID((uchar*)key, keyn, &tid);
         cout<<"table_id: "<<tid<<"\n";
-        TypChg::GetHeader((uchar*)val, valn);
+        RecordDecoder::GetHeader((uchar*)val, valn);
+        
+        
+        cout<<endl;
     }
     
     delete db;

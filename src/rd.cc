@@ -5,11 +5,12 @@
 #include "ErrMsg.h"
 
 using namespace std;
-int TypChg::GetHeader(uchar *z, int n){
+int RecordDecoder::GetHeader(uchar *z, int n){
     
     uint64 type;
     uint64 subtype;
     uint64 lenHdr;
+    uint64 size;
     
     int startHdr;    
     int endHdr;
@@ -25,10 +26,61 @@ int TypChg::GetHeader(uchar *z, int n){
     
     for (ofst=startHdr; ofst<endHdr;) {
         ofst += TypChg::GetVarint64(z+ofst, n, &type);
-        cout<<"type: "<<type<<endl;
+        cout<<"type("<<type<<")"<<": ";        
+        
+        if( type>=22 ){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         /* STRING, BLOB, KEY, and TYPED */
+            subtype = (type-22)%4;
+            if( subtype==2 ){
+                size=0;
+                /* KEY */
+                cout<<"KEY"<<endl;
+                cout<<" SIZE:"<<size;
+            }else{             
+                size = (type-22)/4;
+              if( subtype==0){                
+                cout<<"STRING";
+                cout<<" SIZE:"<<size;
+              }else if(subtype ==1){
+                cout<<"BLOB";
+                cout<<" SIZE:"<<size;
+              }else if (subtype ==3){
+                cout<<"TYPED";
+                cout<<" SIZE:"<<size;
+              }
+            }
+          }else if( type<=2 ){  /* NULL, ZERO, and ONE */
+            size = 0;
+            if(type==0){
+                cout<<"NULL";
+                cout<<" SIZE:"<<size;
+            }else if(type==1){
+                cout<<"ZERO";
+                cout<<" SIZE:"<<size;
+            }else if(type==2){
+                cout<<"ONE";
+                cout<<" SIZE:"<<size;
+            }
+          }else if( type<=10 ){ /* INT */
+                size = type - 2;
+                cout<<"INT";
+                cout<<" SIZE:"<<size;
+          }else if(type>=11 && type<=21){/* NUM */
+                size   = type - 9;
+                cout<<"NUM";
+                cout<<" SIZE:"<<size;
+          }else{
+              return ErrHdr;
+          }
+        cout<<endl;
     }
     
     return GetHdrOK;
+}
+int RecordDecoder::GetTableID(uchar *z, int n, uint64 *tid){
+    if (!z) return ErrRecord;
+    TypChg::GetVarint64((uchar *)z, n, tid);
+    if (tid<=0) return ErrTableID;
+    return RecordOK;
 }
 int TypChg::GetVarint64(uchar *z,int n,uint64 *pResult){
   unsigned int x;

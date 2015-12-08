@@ -18,7 +18,9 @@
 
 #define ErrHdr      1
 #define ErrRecord   2
-#define GetHdrOK    3
+#define ErrTableID  3
+#define RecordOK    50
+#define GetHdrOK    51
 
 #endif /* ERRMSG_H */
 
