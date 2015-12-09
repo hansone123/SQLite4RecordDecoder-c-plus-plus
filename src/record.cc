@@ -5,21 +5,32 @@
  */
 
 #include "record.h"
-int Column::set(char* text, int n){
-  
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+
+
+
+Record::Record(){
+    this->n = this->colz.size();
 }
-int Column::set(real n){
+Record::~Record(){
+}
+int Record::getCol(Column *x, uint64 n){
+    if ( n >= this->n)
+        return ErrColumnGet;
     
+    *x = this->colz[n];
+    return NormalOK;
 }
-int Column::set(int n){
+int Record::getNum(uint64 *n) { *n = this->n; return NormalOK; };
+int Record::addCol(Column *x){
     
-}
-Column::Column(){
-    type = COLUMN_TYPE_NULL;
-    size = 0;
+    this->colz.push_back(*x);
+    this->n = this->colz.size();
+    
+    return NormalOK;
 }
 
-Column::~Column(){
-        
-}
 

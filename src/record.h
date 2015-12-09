@@ -15,31 +15,24 @@
 #define RECORD_H
 
 #include "datatype.h"
+#include "ErrMsg.h"
+#include <vector>
+#include "column.h"
 
+using namespace std;
 
-
-class Column{
-public:
-    char type;      /* Record type in SQLITE4 */
-    char *text;     /* STRING, BLOB, and TYPED */
-    uint64 size;    /* Size of text  */
-    real rnum;     /* REAL */
-    int num;       /* INT */
-    
-    int set(char *text, int n);
-    int set(real n);
-    int set(int n);
-    Column();
-    ~Column();
-};
 
 class Record{
+private:
+    vector<Column> colz;      /* Columns */
+    uint64 n;          /* Number of Columns */
+    
 public:
-    Column *p;      /* Columns */
-    int n;          /* Number of Columns */
     Record();
     ~Record();
-    int addColumn(Column x);
+    int addCol(Column *x);
+    int getCol(Column *x, uint64 n);
+    int getNum(uint64 *n);
 };
 
 #endif /* RECORD_H */

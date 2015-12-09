@@ -31,7 +31,7 @@ typedef struct real_num {
 #define COLUMN_TYPE_ZERO        2
 #define COLUMN_TYPE_ONE         3
 #define COLUMN_TYPE_INT         4
-#define COLUMN_TYPE_REAL         5
+#define COLUMN_TYPE_REAL        5
 #define COLUMN_TYPE_UTF8        6
 #define COLUMN_TYPE_UTF16LE     7
 #define COLUMN_TYPE_UTF16BE     8

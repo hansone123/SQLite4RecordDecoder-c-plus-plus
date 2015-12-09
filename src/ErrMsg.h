@@ -15,12 +15,15 @@
 #define ERRMSG_H
 
 // Error Msg about value of Record
+#define NormalOK            0
+#define ErrHdr              1
+#define ErrRecord           2
+#define ErrTableID          3
+#define ErrColumnSet        4
+#define ColumnOK            5
+#define ErrColumnPut        6
+#define ErrColumnGet        7
 
-#define ErrHdr      1
-#define ErrRecord   2
-#define ErrTableID  3
-#define RecordOK    50
-#define GetHdrOK    51
 
 #endif /* ERRMSG_H */
 

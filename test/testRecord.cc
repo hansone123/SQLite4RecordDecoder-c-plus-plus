@@ -31,12 +31,27 @@ int main(int argc, char** argv) {
 //    test.rnum = rnum;
 //    test.text = text;
 //    test.size = strlen(text);
-    Column a;
-    testfunc(&a);
-    showColumn(a);
+    
+    Column *a = new Column();
+    testfunc(a);
+//    showColumn(*a);
+
+    Record b;
+    b.addCol(a);
+    b.addCol(a);
+    uint64 size;
+    b.getNum(&size);
+    for (int i=0; i<size; i++) {
+        Column *tmp = new Column();
+        b.getCol(tmp, i);
+        showColumn(*tmp);
+    }
+//    uint64 num;
+//    b.getNum(&num);
+//    cout<< num;
     return 0;
 }
-void testfunc(Column *x){
+void testfunc(Column *test){
     char *text = new char[100];
     strcpy(text,"Hello");
     int *num = new int;
@@ -46,23 +61,16 @@ void testfunc(Column *x){
     rnum->m=123;
     rnum->sign=0;
     
-    Column *test = new Column();
-    test->type = 2;
-    test->num = *num;
-    test->rnum = *rnum;
-    test->size = sizeof(text);
-    test->text = (char *)malloc(test->size);
-    strncpy(test->text, text, test->size);
-    delete text;
-    delete num;
-    delete rnum;
+    test->set(text, 5, COLUMN_TYPE_UTF8);
+    test->set(*num);
+    test->set(*rnum);
     
-    x=test;
-    showColumn(*x);
+//    int *tmp = (int*)malloc(sizeof())
+//    int *tmp = memcpy();
 }
 void showColumn(Column &x){
-    cout<<"Column content:\n";
-    cout<<"-----------------------------\n";
+    
+    cout<<"--------------Column ---------------\n";
     cout<<"type:   "<<x.type<<endl;
     cout<<"num:    "<<x.num<<endl;
     cout<<"rnum m: "<<x.rnum.m<<endl;

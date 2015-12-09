@@ -2,29 +2,23 @@
 include config.mk
 
 
-SRC = \
-    $(TOP)/src/rd.cc \
-    $(TOP)/src/record.cc
+SRC := $(wildcard $(TOP)/src/*.cc)
+	
+HDR := $(wildcard $(TOP)/src/*.h)
 
-HDR = \
-    $(TOP)/src/rd.h \
-    $(TOP)/src/ErrMsg.h \
-    $(TOP)/src/datatype.h \
-    $(TOP)/src/record.h
 
-OBJ = \
-    $(TOP)/obj/rd.o
+OBJ := $(patsubst %.cc,%.o,$(wildcard $(TOP)/src/*.cc))
+OBJ := $(patsubst $(TOP)/src/%, %,$(OBJ))
+	
 OBJLIST = \
     rd.o \
-    record.o
+    record.o 
 
-all:	$(OBJLIST) test
+all: $(OBJ) test
 	
-rd.o:
-	g++ -o $(TOP)/obj/rd.o -c $(TOP)/src/rd.cc $(HDR) 
-record.o:
-	g++ -o $(TOP)/obj/record.o -c $(TOP)/src/record.cc $(HDR) 
-	
+%.o: $(TOP)/src/%.cc $(HDR)
+	g++ -o $(TOP)/obj/$@ -c $<
+
 test: testRD testRecord
 
 testRD:
@@ -34,4 +28,5 @@ testRecord:
 clean:
 	rm $(TOP)/test/test*$(EXE)
 	rm $(TOP)/obj/*
-	
+testcmd:
+	echo $(OBJ)

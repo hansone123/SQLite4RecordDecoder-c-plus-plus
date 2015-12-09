@@ -146,13 +146,13 @@ int RecordDecoder::GetColumns(uchar *z, int n){
         cout<<endl;
     }
     
-    return GetHdrOK;
+    return NormalOK;
 }
 int RecordDecoder::GetTableID(uchar *z, int n, uint64 *tid){
     if (!z) return ErrRecord;
     TypChg::GetVarint64((uchar *)z, n, tid);
     if (tid<=0) return ErrTableID;
-    return RecordOK;
+    return NormalOK;
 }
 int TypChg::GetVarint64(uchar *z,int n,uint64 *pResult){
   unsigned int x;
