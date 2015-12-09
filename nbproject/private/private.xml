@@ -10,10 +10,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/hanson/Desktop/sqlite4-record-decoder/src/main.cc</file>
-            <file>file:/home/hanson/Desktop/sqlite4-record-decoder/src/rd.cc</file>
-            <file>file:/home/hanson/Desktop/sqlite4-record-decoder/src/rd.h</file>
-            <file>file:/home/hanson/Desktop/sqlite4-record-decoder/src/datatype.h</file>
+            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/Makefile</file>
+            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/rd.cc</file>
+            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/rd.h</file>
+            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/main.cc</file>
         </group>
     </open-files>
 </project-private>

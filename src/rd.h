@@ -1,15 +1,10 @@
 
 #include "datatype.h"
 
-class Record{
-public:
-    char type;      //Record type in SQLITE4 
-    char *text;      //STRING, BLOB, and TYPED 
-    uint64 size;    //size of val
-};
+
 class RecordDecoder{
 public:
-    static int GetHeader(uchar *z, int n);
+    static int GetColumns(uchar *z, int n);
     static int GetTableID(uchar *z, int n, uint64 *tid);
 };
 class TypChg{

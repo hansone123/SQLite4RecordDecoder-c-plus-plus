@@ -13,7 +13,7 @@
 
 #include <cstdlib>
 #include <stdio.h>
-#include "rd.h"
+#include "../src/rd.h"
 #include <iostream>
 #include <string.h>
 #include "../include/leveldb/db.h"
@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
         uint64 hdrlen;
         RecordDecoder::GetTableID((uchar*)key, keyn, &tid);
         cout<<"table_id: "<<tid<<"\n";
-        RecordDecoder::GetHeader((uchar*)val, valn);
+        RecordDecoder::GetColumns((uchar*)val, valn);
         
         
         cout<<endl;

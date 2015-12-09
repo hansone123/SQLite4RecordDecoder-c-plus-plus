@@ -6,7 +6,7 @@
 #include "ErrMsg.h"
 
 using namespace std;
-int RecordDecoder::GetHeader(uchar *z, int n){
+int RecordDecoder::GetColumns(uchar *z, int n){
     
     uint64 type;        /*Datatype*/
     uint64 subtype;     /*Subtype of TEXT */
