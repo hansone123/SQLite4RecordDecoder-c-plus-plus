@@ -31,20 +31,32 @@ int main(int argc, char** argv) {
 //    test.rnum = rnum;
 //    test.text = text;
 //    test.size = strlen(text);
+    real x;
+    x.e = 100;
+    x.m = 123456;
+    x.sign = 0;
+    ColStr *col1 = (ColStr*)Colmn::make_Colmn(COLUMN_TYPE_UTF8);
+    ColInt *col2 = (ColInt*)Colmn::make_Colmn(COLUMN_TYPE_INT);
+    ColNum *col3 = (ColNum*)Colmn::make_Colmn(COLUMN_TYPE_NUM);
+    char str[] = "abcdef";
+    col1->set(str, 5);
+    col2->set(100);
+    col3->set(x);
+    Colmn *tmp2 = col1;
     
     Column *a = new Column();
     testfunc(a);
 //    showColumn(*a);
 
-    Record b;
-    b.addCol(a);
-    b.addCol(a);
-    uint64 size;
-    b.getNum(&size);
+    Record rec;
+    rec.addCol(col1);
+    rec.addCol(col2);
+    rec.addCol(col3);
+    uint64 size = rec.getNum();
     for (int i=0; i<size; i++) {
-        Column *tmp = new Column();
-        b.getCol(tmp, i);
-        showColumn(*tmp);
+        Colmn *tmp;
+        rec.getCol(tmp, i);
+        //tmp->showTyp();
     }
 //    uint64 num;
 //    b.getNum(&num);

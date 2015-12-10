@@ -20,7 +20,7 @@ int RecordDecoder::GetColumns(uchar *z, int n){
     int ofstHdr;        /*Offset into the header*/
     
     //Get header
-    if( !z ) return ErrRecord;
+    if( !z ) return NormalOK;
     
     startHdr = TypChg::GetVarint64(z, n, &lenHdr);
     endHdr = lenHdr + startHdr;
@@ -138,7 +138,7 @@ int RecordDecoder::GetColumns(uchar *z, int n){
                 num.e = (e >> 2);
                 if( e & 0x02 ) num.e = -1 * num.e;
                 if( e & 0x01 ) num.sign = 1;
-                cout<<"value: "<<(num.sign?-1:1)<<"*"<<num.m<<"*10^"<<num.e<<endl;
+                cout<<"value: "<<(num.sign?"-":"+")<<num.m<<"*10^"<<num.e<<endl;
           }else{
               return ErrHdr;
           }

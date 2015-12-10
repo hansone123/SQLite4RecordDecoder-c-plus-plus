@@ -17,19 +17,20 @@ Record::Record(){
 }
 Record::~Record(){
 }
-int Record::getCol(Column *x, uint64 n){
+int Record::getCol(Colmn *x, uint64 n){
     if ( n >= this->n)
         return ErrColumnGet;
     
-    *x = this->colz[n];
+    x = &(this->colz[n]);
     return NormalOK;
 }
-int Record::getNum(uint64 *n) { *n = this->n; return NormalOK; };
-int Record::addCol(Column *x){
+uint64 Record::getNum() { return this->n; }
+uint64 Record::getTableID() { return this->tid; }
+int Record::addCol(Colmn *x){
     
     this->colz.push_back(*x);
     this->n = this->colz.size();
-    
+    this->colz[this->n -1].showTyp();
     return NormalOK;
 }
 
