@@ -20,9 +20,7 @@
 
 using namespace std;
 
-Column::Column(){
-    this->type = COL_NULL;
-}
+
 const char *Column::getData(uint64 &n){
     n = this->size;
     return this->data;
@@ -30,24 +28,27 @@ const char *Column::getData(uint64 &n){
 ColType Column::getType(){
     return this->type;
 }
-int Column::set(uchar *z, int n){
+int Column::set(char *z, uint64 n){
     this->size = n;
-    this->data = new char(n);
+    this->data = new char[n];
     copy(z, z+n, this->data);
     
     return NormalOK;
 }
-int Column::set(char *z, int n){
-    this->size = n;
-    this->data = new char(n);
-    copy(z, z+n, this->data);
+int Column::setType(ColType t){
+    this->type = t;
     
     return NormalOK;
 }
-int Column::setType(ColType c){
-    this->type = c;
-    
-    return NormalOK;
+void Column::show(){
+    cout<<"column value: "<<endl<<"        ";
+    for(int i=0; i< this->size; i++)
+        printf("0x%x ", *(this->data + i));
+    cout<<endl;
+}
+Column::Column(){
+    this->type = COL_NULL;
+    this->size = 0;
 }
 Column::Column(const Column &col){
     this->size = col.size;
@@ -60,5 +61,9 @@ Column::Column(ColType type){
     this->type = type;
 }
 
-Column::~Column(){
+Column::~Column(){ 
+    if (this->size > 0) {
+//        cout<<"call delete"<<endl;
+        delete [] this->data;        
+    }
 }

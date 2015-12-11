@@ -33,14 +33,18 @@ int main(int argc, char** argv) {
     show(b, s);
 //    cout<<a.getType();
 //    showColumn(*a);
-
-    Record rec;
-    rec.addCol(a);
-    rec.addCol(a);
-    rec.addCol(a);
-    uint64 size = rec.getNum();
-    for (int i=0; i<size; i++) {
+    for (int i=0; i<10; i++ ){
+        Column c;
+        c.setType(COL_UTF8);
+        c.set("a",1);
     }
+    Record rec;
+//    rec.addCol(a);
+//    rec.addCol(a);
+//    rec.addCol(a);
+//    uint64 size = rec.getNum();
+//    for (int i=0; i<size; i++) {
+//    }
 //    uint64 num;
 //    b.getNum(&num);
 //    cout<< num;

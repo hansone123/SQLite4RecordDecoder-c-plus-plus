@@ -7,28 +7,17 @@
         <activeConfTypeElem>0</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/main.cc</url>
-            <bookmark id="1">
-                <name/>
-                <line>56</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/record.cc</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/rd.cc</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/record.h</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/column.h</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/column.cc</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/test/testRD.cc</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/rd.h</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/ErrMsg.h</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/test/testRecord.cc</file>
-            <file>file:/home/hanson/NetBeansProjects/SQLite4RecordDecoder/src/datatype.h</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/column.cc</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/test/testRecord.cc</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/rd.cc</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/record.cc</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/record.h</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/datatype.h</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/column.h</file>
+            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/test/testRD.cc</file>
         </group>
     </open-files>
 </project-private>

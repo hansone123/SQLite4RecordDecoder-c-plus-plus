@@ -22,11 +22,12 @@ private:
     uint64 size;    /* Size of data  */
 public: 
     
-    int set(uchar* z, int n);
-    int set(char *z, int n);
+    int set(char* z, uint64 n);
     int setType(ColType c);
     const char *getData(uint64 &n);
     ColType getType();
+    void show();
+    
     Column();
     Column(const Column &col);
     Column(ColType type);

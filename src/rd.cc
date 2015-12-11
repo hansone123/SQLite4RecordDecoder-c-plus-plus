@@ -34,6 +34,7 @@ int RecordDecoder::GetColumns(uchar *z, int n, Record &rec){
         cout<<"type("<<type<<")"<<": ";        
         cout<<"offset: "<<ofst<<endl;
         Column col;
+        
         if( type>=22 ){         /* KEY, STRING, BLOB, and TYPED */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            /* STRING, BLOB, KEY, and TYPED */
             subtype = (type-22)%4;
             if( subtype==2 ){               /* KEY */
@@ -47,26 +48,26 @@ int RecordDecoder::GetColumns(uchar *z, int n, Record &rec){
                     col.setType(COL_UTF8);
                 }else if( z[ofst]>0x02 ){           /* UTF8 STRING */
                     col.setType(COL_UTF8);
-                    col.set(z+ofst,size);
+                    col.set((char *)(z+ofst),size);
                 }else{
                     if( z[ofst]==0x00 ){            /* UTF8 STRING */
                         col.setType(COL_UTF8);
-                        col.set(z+ofst+1,size-1);
+                        col.set((char*)(z+ofst+1),size-1);
                     
                     }else if( z[ofst] == 0x01 ){    /* UTF16LE STRING */
                         col.setType(COL_UTF16LE);
-                        col.set(z+ofst+1, size-1);
+                        col.set((char*)(z+ofst+1), size-1);
                         
                     }else{                          /* UTF16BE STRING */\
                         col.setType(COL_UTF16BE);
-                        col.set(z+ofst+1, size-1);
+                        col.set((char*)(z+ofst+1), size-1);
                     }
                 }
               }else if(subtype ==1){
                 cout<<"BLOB";
                 cout<<" SIZE:"<<size<<endl;;
                 col.setType(COL_BLOB);
-                col.set(z+ofst, size);
+                col.set((char*)(z+ofst), size);
               }else if (subtype ==3){
                 cout<<"TYPED";
                 cout<<" SIZE:"<<size;
@@ -86,21 +87,21 @@ int RecordDecoder::GetColumns(uchar *z, int n, Record &rec){
                 cout<<"INT";
                 cout<<" SIZE:"<<size<<endl;
                 
-                
                 col.setType(COL_INT);
-                col.set(z+ofst, size);
+                col.set((char*)(z+ofst), size);
           }else if(type>=11 && type<=21){/* NUM */
                 size   = type - 9;
                 cout<<"NUM";
                 cout<<" SIZE:"<<size<<endl;
                 
                 col.setType(COL_NUM);
-                col.set(z+ofst, size);
+                col.set((char*)(z+ofst), size);
           }else{
               return ErrHdr;
           }
         ofst += size;
-        
+        col.show();
+        rec.addCol(col);
     }
     
     return NormalOK;

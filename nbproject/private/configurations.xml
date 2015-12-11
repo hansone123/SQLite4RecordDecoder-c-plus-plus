@@ -39,6 +39,20 @@
       <df name="testdb">
       </df>
     </df>
+    <df root="." name="1">
+      <df name="include">
+        <df name="leveldb">
+        </df>
+      </df>
+      <df name="obj">
+      </df>
+      <df name="src">
+      </df>
+      <df name="test">
+      </df>
+      <df name="testdb">
+      </df>
+    </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

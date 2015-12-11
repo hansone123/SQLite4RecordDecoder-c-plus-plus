@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
         r.setTid(tid);
         cout<<"table_id: "<<r.getTableID()<<"\n";
         RecordDecoder::GetColumns((uchar*)val, valn, r);
-        
+        cout<<"Record num: "<<r.getNum()<<endl;
         
         cout<<endl;
     }
