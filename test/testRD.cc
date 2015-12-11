@@ -17,10 +17,11 @@
 #include <iostream>
 #include <string.h>
 #include "../include/leveldb/db.h"
+#include "../src/record.h"
 
 using namespace std;
 
-void showChar(char *z, int n);
+void show(char *z, int n);
 /*
  * 
  */
@@ -45,16 +46,18 @@ int main(int argc, char** argv) {
         int keyn = it->key().size();
         int valn = it->value().size();
         cout<<"Key: ";
-        showChar(key, keyn);
+        show(key, keyn);
         cout<<"\nVal: ";
-        showChar(val, valn);
+        show(val, valn);
         cout<<endl;
         
         uint64 tid;
         uint64 hdrlen;
-        RecordDecoder::GetTableID((uchar*)key, keyn, &tid);
-        cout<<"table_id: "<<tid<<"\n";
-        RecordDecoder::GetColumns((uchar*)val, valn);
+        RecordDecoder::GetTableID((uchar*)key, keyn, tid);
+        Record r;
+        r.setTid(tid);
+        cout<<"table_id: "<<r.getTableID()<<"\n";
+        RecordDecoder::GetColumns((uchar*)val, valn, r);
         
         
         cout<<endl;
@@ -65,7 +68,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void showChar(char *z, int n){
+void show(char *z, int n){
      for (int i=0; i<n;i++)
         printf("%x,",z[i]);
 }

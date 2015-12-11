@@ -4,9 +4,10 @@
 #include <iostream>
 #include <string.h>
 #include "ErrMsg.h"
+#include "column.h"
 
 using namespace std;
-int RecordDecoder::GetColumns(uchar *z, int n){
+int RecordDecoder::GetColumns(uchar *z, int n, Record &rec){
     
     uint64 type;        /*Datatype*/
     uint64 subtype;     /*Subtype of TEXT */
@@ -22,79 +23,50 @@ int RecordDecoder::GetColumns(uchar *z, int n){
     //Get header
     if( !z ) return NormalOK;
     
-    startHdr = TypChg::GetVarint64(z, n, &lenHdr);
+    startHdr = TypChg::GetVarint64(z, n, lenHdr);
     endHdr = lenHdr + startHdr;
     
     if (endHdr > n) return ErrHdr;  
     
-    for (ofstHdr=startHdr,ofst=endHdr; ofstHdr<endHdr;) {
-        ofstHdr += TypChg::GetVarint64(z+ofstHdr, n, &type);
+    for (ofstHdr=startHdr,ofst=endHdr; ofstHdr<endHdr; ) {
+        
+        ofstHdr += TypChg::GetVarint64(z+ofstHdr, n, type);
         cout<<"type("<<type<<")"<<": ";        
         cout<<"offset: "<<ofst<<endl;
+        Column col;
         if( type>=22 ){         /* KEY, STRING, BLOB, and TYPED */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            /* STRING, BLOB, KEY, and TYPED */
             subtype = (type-22)%4;
-            if( subtype==2 ){
+            if( subtype==2 ){               /* KEY */
                 size=0;
-                /* KEY */
-                cout<<"KEY";
-                cout<<" SIZE:"<<size;
             }else{             
                 size = (type-22)/4;
               if( subtype==0){                
                 cout<<"STRING";
                 cout<<" SIZE:"<<size<<endl;;
                 if (size ==0){
-                    
-                }else if( z[ofst]>0x02 ){   /*UTF8 STRING*/
-                    cout<<"UTF8"<<endl;
-                    uchar *str = (uchar*)malloc(size);
-                        memcpy(str, z+ofst, size);
-                        cout<<"value: ";
-                        for (int i=0; i<size; i++) {
-                            printf("%c", *(str+i));
-                        }
-                        cout<<endl;
+                    col.setType(COL_UTF8);
+                }else if( z[ofst]>0x02 ){           /* UTF8 STRING */
+                    col.setType(COL_UTF8);
+                    col.set(z+ofst,size);
                 }else{
-                    if( z[ofst]==0x00 ){    /*UTF8 STRING*/
-                        cout<<"UTF8"<<endl;
-                        uchar *str = (uchar*)malloc(size-1);
-                        memcpy(str, z+ofst+1, size-1);
-                        cout<<"value: ";
-                        for (int i=0; i<size-1; i++) {
-                            printf("%c,", *(str+i));
-                        }
-                        cout<<endl;
-                    }else if( z[ofst] == 0x01 ){    /*UTF16LE STRING*/
-                        cout<<"UTF16LE"<<endl;
-                        uchar *str = (uchar*)malloc(((size-1)/2)*2);
-                        memcpy(str, z+ofst+1, size-1);
-                        cout<<"value: ";
-                        for (int i=0; i<size-1; i++) {
-                            printf("%x,", *(str+i));
-                        }
-                        cout<<endl;
+                    if( z[ofst]==0x00 ){            /* UTF8 STRING */
+                        col.setType(COL_UTF8);
+                        col.set(z+ofst+1,size-1);
+                    
+                    }else if( z[ofst] == 0x01 ){    /* UTF16LE STRING */
+                        col.setType(COL_UTF16LE);
+                        col.set(z+ofst+1, size-1);
                         
-                    }else{                          /*UTF16BE STRING*/
-                        cout<<"UTF16BE"<<endl;
-                        uchar *str = (uchar*)malloc(((size-1)/2)*2);
-                        memcpy(str, z+ofst+1, size-1);
-                        cout<<"value: ";
-                        for (int i=0; i<size-1; i++) {
-                            printf("%x,", *(str+i));
-                        }
-                        cout<<endl;
+                    }else{                          /* UTF16BE STRING */\
+                        col.setType(COL_UTF16BE);
+                        col.set(z+ofst+1, size-1);
                     }
                 }
               }else if(subtype ==1){
                 cout<<"BLOB";
-                cout<<" SIZE:"<<size<<endl;
-                uchar *blob = (uchar*)malloc(size);
-                memcpy(blob, z+ofst, size);
-                cout<<"value: ";
-                for (int i=0; i<size; i++) {
-                    printf("%x,", *(blob+i));
-                }
-                cout<<endl;
+                cout<<" SIZE:"<<size<<endl;;
+                col.setType(COL_BLOB);
+                col.set(z+ofst, size);
               }else if (subtype ==3){
                 cout<<"TYPED";
                 cout<<" SIZE:"<<size;
@@ -103,96 +75,81 @@ int RecordDecoder::GetColumns(uchar *z, int n){
           }else if( type<=2 ){  /* NULL, ZERO, and ONE */
             size = 0;
             if(type==0){
-                cout<<"NULL";
-                cout<<" SIZE:"<<size;
+                col.setType(COL_NULL);
             }else if(type==1){
-                cout<<"ZERO";
-                cout<<" SIZE:"<<size;
+                col.setType(COL_ZERO);
             }else if(type==2){
-                cout<<"ONE";
-                cout<<" SIZE:"<<size;
+                col.setType(COL_ONE);
             }
           }else if( type<=10 ){ /* INT */
                 size = type - 2;
                 cout<<"INT";
                 cout<<" SIZE:"<<size<<endl;
-                int64 v = ((char*)z)[ofst];
-                for(int iByte=1; iByte<size; iByte++){
-                  v = v*256 + z[ofst+iByte];
-                }
-                cout<<"value: "<<v<<endl;
+                
+                
+                col.setType(COL_INT);
+                col.set(z+ofst, size);
           }else if(type>=11 && type<=21){/* NUM */
                 size   = type - 9;
                 cout<<"NUM";
                 cout<<" SIZE:"<<size<<endl;
-                real_num num = {0, 0, 0, 0};
-                uint64 m;
-                int e;
-                int tmpsize;
-                tmpsize = TypChg::GetVarint64(z+ofst, size, &m);
-                e = (int)m;
-                tmpsize += TypChg::GetVarint64(z+ofst+tmpsize, size-tmpsize, &m);
-                if( tmpsize!=size ) return ErrRecord;
-
-                num.m = m;
-                num.e = (e >> 2);
-                if( e & 0x02 ) num.e = -1 * num.e;
-                if( e & 0x01 ) num.sign = 1;
-                cout<<"value: "<<(num.sign?"-":"+")<<num.m<<"*10^"<<num.e<<endl;
+                
+                col.setType(COL_NUM);
+                col.set(z+ofst, size);
           }else{
               return ErrHdr;
           }
         ofst += size;
-        cout<<endl;
+        
     }
     
     return NormalOK;
 }
-int RecordDecoder::GetTableID(uchar *z, int n, uint64 *tid){
+int RecordDecoder::GetTableID(uchar *z, int n, uint64 &tid){
     if (!z) return ErrRecord;
     TypChg::GetVarint64((uchar *)z, n, tid);
     if (tid<=0) return ErrTableID;
     return NormalOK;
 }
-int TypChg::GetVarint64(uchar *z,int n,uint64 *pResult){
+int TypChg::GetVarint64(uchar *z,int n,uint64 &Result){
   unsigned int x;
   if( n<1 ) return 0;
   if( z[0]<=240 ){
-    *pResult = z[0];
+    Result = z[0];
     return 1;
   }
   if( z[0]<=248 ){
     if( n<2 ) return 0;
-    *pResult = (z[0]-241)*256 + z[1] + 240;
+    Result = (z[0]-241)*256 + z[1] + 240;
     return 2;
   }
   if( n<z[0]-246 ) return 0;
   if( z[0]==249 ){
-    *pResult = 2288 + 256*z[1] + z[2];
+    Result = 2288 + 256*z[1] + z[2];
     return 3;
   }
   if( z[0]==250 ){
-    *pResult = (z[1]<<16) + (z[2]<<8) + z[3];
+    Result = (z[1]<<16) + (z[2]<<8) + z[3];
     return 4;
   }
   x = (z[1]<<24) + (z[2]<<16) + (z[3]<<8) + z[4];
   if( z[0]==251 ){
-    *pResult = x;
+    Result = x;
     return 5;
   }
   if( z[0]==252 ){
-    *pResult = (((uint64)x)<<8) + z[5];
+    Result = (((uint64)x)<<8) + z[5];
     return 6;
   }
   if( z[0]==253 ){
-    *pResult = (((uint64)x)<<16) + (z[5]<<8) + z[6];
+    Result = (((uint64)x)<<16) + (z[5]<<8) + z[6];
     return 7;
   }
   if( z[0]==254 ){
-    *pResult = (((uint64)x)<<24) + (z[5]<<16) + (z[6]<<8) + z[7];
+    Result = (((uint64)x)<<24) + (z[5]<<16) + (z[6]<<8) + z[7];
     return 8;
   }
-  *pResult = (((uint64)x)<<32) +
+  Result = (((uint64)x)<<32) +
                (0xffffffff & ((z[5]<<24) + (z[6]<<16) + (z[7]<<8) + z[8]));
   return 9;
 }
@@ -255,7 +212,30 @@ int TypChg::PutVarint64(uchar *z, const uint64 x){
   varintWrite32(z+5, y);
   return 9;
 }
+int TypChg::GetReal(uchar* z, int n, real& Result){
+    
+    uint64 m;
+    int e;
+    int tmpsize;
+    tmpsize = TypChg::GetVarint64(z, n, m);
+    e = (int)m;
+    tmpsize += TypChg::GetVarint64(z+tmpsize, n-tmpsize, m);
+    if( tmpsize!=n ) return ErrRecord;
 
+    Result.m = m;
+    Result.e = (e >> 2);
+    if( e & 0x02 ) Result.e = -1 * Result.e;
+    if( e & 0x01 ) Result.sign = 1;
+    
+    return NormalOK;
+}
+int TypChg::GetInt(uchar* z, int n, int64 &Result){
+    Result = ((char*)z)[0];
+    for(int iByte=1; iByte<n; iByte++){
+        Result = Result*256 + z[iByte];
+    }
+    return NormalOK;
+}
 void TypChg::varintWrite32(uchar *z, unsigned int y){
   z[0] = (unsigned char)(y>>24);
   z[1] = (unsigned char)(y>>16);

@@ -17,7 +17,7 @@ Record::Record(){
 }
 Record::~Record(){
 }
-int Record::getCol(Colmn *x, uint64 n){
+int Record::getCol(Column *x, uint64 n){
     if ( n >= this->n)
         return ErrColumnGet;
     
@@ -26,11 +26,16 @@ int Record::getCol(Colmn *x, uint64 n){
 }
 uint64 Record::getNum() { return this->n; }
 uint64 Record::getTableID() { return this->tid; }
-int Record::addCol(Colmn *x){
+int Record::setTid(const uint64 &t){
+    this->tid = t;
+    if (this->tid <1 )
+        return ErrTableID;
+    return NormalOK;
+}
+int Record::addCol(const Column &x){
     
-    this->colz.push_back(*x);
+    this->colz.push_back(x);
     this->n = this->colz.size();
-    this->colz[this->n -1].showTyp();
     return NormalOK;
 }
 

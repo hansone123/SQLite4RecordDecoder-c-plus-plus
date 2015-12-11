@@ -24,16 +24,17 @@ using namespace std;
 
 class Record{
 private:
-    vector<Colmn> colz;      /* Columns */
+    vector<Column> colz;      /* Columns */
     uint64 n;          /* Number of Columns */
     uint64 tid;
     
 public:
     Record();
     ~Record();
-    int addCol(Colmn *x);
+    int setTid(const uint64 &t);
+    int addCol(const Column &x);
     /*Get method*/
-    int getCol(Colmn *x, uint64 n);
+    int getCol(Column *x, uint64 n);
     uint64 getTableID();
     uint64 getNum();
 };

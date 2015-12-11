@@ -27,17 +27,10 @@ typedef struct real_num {
 
 
 /*for record type*/
-#define COLUMN_TYPE_NULL        0x00
-#define COLUMN_TYPE_ZERO        0x01
-#define COLUMN_TYPE_ONE         0x02
-#define COLUMN_TYPE_INT         0x03
-#define COLUMN_TYPE_NUM         0x04
-#define COLUMN_TYPE_UTF8        0x05
-#define COLUMN_TYPE_UTF16LE     0x06
-#define COLUMN_TYPE_UTF16BE     0x07
-#define COLUMN_TYPE_BLOB        0x08
-//#define COLUMN_TYPE_KEY        10
-//#define COLUMN_TYPE_TYPED      11
+enum ColType{
+     COL_NULL, COL_ZERO, COL_ONE, COL_INT, COL_NUM,         
+     COL_UTF8, COL_UTF16LE, COL_UTF16BE, COL_BLOB        
+};
 
 #endif /* DATATYPE_H */
 

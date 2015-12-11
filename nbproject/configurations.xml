@@ -39,7 +39,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath>test/testRecord.exe</executablePath>
+          <executablePath>test/testRD.exe</executablePath>
           <ccTool>
             <incDir>
               <pElem>.</pElem>
