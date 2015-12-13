@@ -39,20 +39,6 @@
       <df name="testdb">
       </df>
     </df>
-    <df root="." name="1">
-      <df name="include">
-        <df name="leveldb">
-        </df>
-      </df>
-      <df name="obj">
-      </df>
-      <df name="src">
-      </df>
-      <df name="test">
-      </df>
-      <df name="testdb">
-      </df>
-    </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -79,8 +65,6 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
-        <gdb_signals>
-        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -92,8 +76,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" make run</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}"</runcommand>

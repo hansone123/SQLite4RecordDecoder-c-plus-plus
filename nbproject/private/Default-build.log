@@ -1,1 +1,12 @@
-make: *** No targets.  Stop.
+g++ -o ./obj/column.o -c src/column.cc
+g++ -o ./obj/record.o -c src/record.cc
+g++ -o ./obj/rd.o -c src/rd.cc
+g++ -o ./test/testRD.exe ./test/testRD.cc ./src/column.h ./src/datatype.h ./src/record.h ./src/rd.h ./src/ErrMsg.h ./src/column.cc ./src/record.cc ./src/rd.cc -lpthread -lleveldb
+g++ -o ./test/testRecord.exe ./test/testRecord.cc ./src/column.h ./src/datatype.h ./src/record.h ./src/rd.h ./src/ErrMsg.h ./src/column.cc ./src/record.cc ./src/rd.cc
+./test/testRecord.cc: In function ‘int main(int, char**)’:
+./test/testRecord.cc:30:19: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+     a.set("123", 3);
+                   ^
+./test/testRecord.cc:39:20: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+         c.set("a",1);
+                    ^

@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <code-assistance-data xmlns="http://www.netbeans.org/ns/make-project-private/1">
-        <code-model-enabled>true</code-model-enabled>
-    </code-assistance-data>
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>0</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/column.cc</file>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/test/testRecord.cc</file>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/rd.cc</file>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/record.cc</file>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/record.h</file>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/datatype.h</file>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/src/column.h</file>
-            <file>file:/home/hansone123/Desktop/SQLite4RecordDecoder/test/testRD.cc</file>
-        </group>
-    </open-files>
 </project-private>
