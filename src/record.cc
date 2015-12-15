@@ -24,6 +24,23 @@ int Record::getCol(Column *x, uint64 n){
     x = &(this->colz[n]);
     return NormalOK;
 }
+void Record::show(){
+    cout<<"---------------Record---------------";
+    for (int i=0; i<this->n; i++) {
+        Column co = this->colz[i];
+        cout<<"(type:"<<co.getType()<<"):  ";
+        switch (co.getType()) {
+            case COL_INT:
+            case COL_NUM:
+            case COL_UTF8:
+            case COL_BLOB:
+            case COL_TYPED:
+            default :
+                break;
+        }
+     
+    }
+}
 uint64 Record::getNum() { return this->n; }
 uint64 Record::getTableID() { return this->tid; }
 int Record::setTid(const uint64 &t){

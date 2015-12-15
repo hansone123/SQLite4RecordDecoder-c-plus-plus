@@ -31,6 +31,7 @@ private:
 public:
     Record();
     ~Record();
+    void show();
     int setTid(const uint64 &t);
     int addCol(const Column &x);
     /*Get method*/
