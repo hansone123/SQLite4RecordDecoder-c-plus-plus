@@ -29,7 +29,8 @@ typedef struct real_num {
 /*for record type*/
 enum ColType{
      COL_NULL, COL_ZERO, COL_ONE, COL_INT, COL_NUM,         
-     COL_UTF8, COL_UTF16LE, COL_UTF16BE, COL_BLOB        
+     COL_UTF8, COL_UTF16LE, COL_UTF16BE, COL_BLOB,
+     COL_TYPED
 };
 
 #endif /* DATATYPE_H */

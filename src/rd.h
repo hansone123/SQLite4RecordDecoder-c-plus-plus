@@ -4,7 +4,14 @@
 
 class RecordDecoder{
 public:
-    static int GetColumns(uchar *z, int n, Record &rec);
+    int GetTaleSchema(Record &input);
+    static int GetColumnsFromKey(
+        char*z,
+        uint64 n,
+        uint64 iOfst,     /* Offset of value in the key */
+        Record &result                /* Write the results here */
+);
+    static int GetColumnsFromValue(uchar *z, int n, Record &result);
     static int GetTableID(uchar *z, int n, uint64 &tid);
 };
 class TypChg{
@@ -13,6 +20,11 @@ public:
     static int GetVarint64(uchar *z ,int n ,uint64 &Result); /* Transfer from  z(Varint) to Result(uint64), size=n */
     static int GetReal(uchar *z, int n, real &Result);
     static int GetInt(uchar *z, int n, int64 &Result);
+    static int DecodeNumericKey(
+                    const char *aKey,       /* Input encoding */
+                    uint64 nKey,            /* Number of bytes in aKey[] */
+                    real &pVal              /* Write the result here */
+                  );
 private:    
     static void varintWrite32(uchar *z, unsigned int y);
 };

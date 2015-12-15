@@ -53,12 +53,17 @@ int main(int argc, char** argv) {
         
         uint64 tid;
         uint64 hdrlen;
-        RecordDecoder::GetTableID((uchar*)key, keyn, tid);
+        if ( RecordDecoder::GetTableID((uchar*)key, keyn, tid) == 0) {
+            cout<<"Get Error TableID."<<endl;
+        }
         Record r;
         r.setTid(tid);
         cout<<"table_id: "<<r.getTableID()<<"\n";
-        RecordDecoder::GetColumns((uchar*)val, valn, r);
-        cout<<"Record num: "<<r.getNum()<<endl;
+        if ( RecordDecoder::GetColumnsFromValue((uchar*)val, valn, r) == 0){
+            cout<<"Get Error Record value."<<endl;
+        }else{
+            cout<<"Column num: "<<r.getNum()<<endl;
+        }
         
         cout<<endl;
     }
