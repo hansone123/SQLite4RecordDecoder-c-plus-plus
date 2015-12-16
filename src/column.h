@@ -24,7 +24,7 @@ public:
     
     int set(char* z, uint64 n);
     int setType(ColType c);
-    const char *getData(uint64 &n);
+    char *getData(uint64 &n);
     ColType getType();
     void show();
     

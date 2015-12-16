@@ -45,25 +45,30 @@ int main(int argc, char** argv) {
         char *val = (char *)it->value().data();
         int keyn = it->key().size();
         int valn = it->value().size();
-        cout<<"Key: ";
-        show(key, keyn);
-        cout<<"\nVal: ";
-        show(val, valn);
-        cout<<endl;
+        
+//        cout<<"Key: ";
+//        show(key, keyn);
+//        cout<<"\nVal: ";
+//        show(val, valn);
+//        cout<<endl;
         
         uint64 tid;
         uint64 hdrlen;
         if ( RecordDecoder::GetTableID((uchar*)key, keyn, tid) == 0) {
             cout<<"Get Error TableID."<<endl;
+            continue;  
         }
         Record r;
         r.setTid(tid);
-        cout<<"table_id: "<<r.getTableID()<<"\n";
+        
         if ( RecordDecoder::GetColumnsFromValue((uchar*)val, valn, r) == 0){
             cout<<"Get Error Record value."<<endl;
-        }else{
-            cout<<"Column num: "<<r.getNum()<<endl;
+            continue;
         }
+        
+        
+        r.show();
+        
         
         cout<<endl;
     }

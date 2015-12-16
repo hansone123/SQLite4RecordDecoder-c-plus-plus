@@ -21,7 +21,7 @@
 using namespace std;
 
 
-const char *Column::getData(uint64 &n){
+char *Column::getData(uint64 &n){
     n = this->size;
     return this->data;
 }
@@ -41,7 +41,7 @@ int Column::setType(ColType t){
     return NormalOK;
 }
 void Column::show(){
-    cout<<"column value: "<<endl<<"        ";
+    cout<<"column value: ";
     for(int i=0; i< this->size; i++)
         printf("0x%x ", *(this->data + i));
     cout<<endl;

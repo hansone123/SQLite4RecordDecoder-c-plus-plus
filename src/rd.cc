@@ -108,7 +108,7 @@ int RecordDecoder::GetColumnsFromValue(uchar *z, int n, Record &result){
               return 0;
           }
         ofst += size;
-        col.show();
+//        col.show();
         result.addCol(col);
     }
     return 1;
@@ -120,7 +120,7 @@ int RecordDecoder::GetTableID(uchar *z, int n, uint64 &tid){
     return 1;
 }
 int RecordDecoder::GetTaleSchema(Record &input){
-    
+    return 1;
 }
 int TypChg::GetVarint64(uchar *z,int n,uint64 &Result){
   unsigned int x;
@@ -231,8 +231,8 @@ int TypChg::GetReal(uchar* z, int n, real& Result){
     tmpsize = TypChg::GetVarint64(z, n, m);
     e = (int)m;
     tmpsize += TypChg::GetVarint64(z+tmpsize, n-tmpsize, m);
-    if( tmpsize!=n ) return ErrRecord;
-
+    if( tmpsize!=n ) return 0;
+    
     Result.m = m;
     Result.e = (e >> 2);
     if( e & 0x02 ) Result.e = -1 * Result.e;
@@ -241,6 +241,8 @@ int TypChg::GetReal(uchar* z, int n, real& Result){
     return 1;
 }
 int TypChg::GetInt(uchar* z, int n, int64 &Result){
+    if (!z || n==0)
+        return 0;
     Result = ((char*)z)[0];
     for(int iByte=1; iByte<n; iByte++){
         Result = Result*256 + z[iByte];

@@ -6,6 +6,8 @@
         <in>column.cc</in>
         <in>rd.cc</in>
         <in>record.cc</in>
+        <in>tableSchema.cpp</in>
+        <in>tableSchema.h</in>
       </df>
       <df name="test">
         <in>testRD.cc</in>
@@ -56,6 +58,10 @@
       <item path="src/rd.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/record.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/tableSchema.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/tableSchema.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="test/testRD.cc" ex="false" tool="1" flavor2="0">
       </item>
