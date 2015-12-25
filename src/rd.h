@@ -4,7 +4,7 @@
 
 class RecordDecoder{
 public:
-    int GetTaleSchema(Record &input);
+    static int GetTaleSchema(Record &input);
     static int GetColumnsFromKey(
         char*z,
         uint64 n,
@@ -21,7 +21,7 @@ public:
     static int GetReal(uchar *z, int n, real &Result);
     static int GetInt(uchar *z, int n, int64 &Result);
     static int DecodeNumericKey(
-                    const char *aKey,       /* Input encoding */
+                    const uchar *aKey,       /* Input encoding */
                     uint64 nKey,            /* Number of bytes in aKey[] */
                     real &pVal              /* Write the result here */
                   );

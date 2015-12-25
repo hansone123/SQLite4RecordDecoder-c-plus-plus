@@ -22,7 +22,7 @@ private:
     uint64 size;    /* Size of data  */
 public: 
     
-    int set(char* z, uint64 n);
+    int set(const char* z, uint64 n);
     int setType(ColType c);
     char *getData(uint64 &n);
     ColType getType();

@@ -28,7 +28,7 @@ char *Column::getData(uint64 &n){
 ColType Column::getType(){
     return this->type;
 }
-int Column::set(char *z, uint64 n){
+int Column::set(const char *z, uint64 n){
     this->size = n;
     this->data = new char[n];
     copy(z, z+n, this->data);

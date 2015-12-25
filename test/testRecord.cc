@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include "../src/record.h"
-#include "string.h"
+#include "string"
 
 using namespace std;
 
@@ -27,7 +27,8 @@ int show(const char *a, uint64 &n);
 int main(int argc, char** argv) {
     
     Column a(COL_UTF8);
-    a.set("123", 3);
+    string val ="value of column";
+    a.set(val.c_str(), (uint64)val.capacity());
     uint64 s = 0;
     const char *b = a.getData(s);
     show(b, s);
@@ -36,7 +37,7 @@ int main(int argc, char** argv) {
     for (int i=0; i<10; i++ ){
         Column c;
         c.setType(COL_UTF8);
-        c.set("a",1);
+        c.set(val.c_str(),(uint64)val.capacity());
     }
     Record rec;
 //    rec.addCol(a);

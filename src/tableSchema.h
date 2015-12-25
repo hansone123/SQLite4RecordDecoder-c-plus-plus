@@ -14,16 +14,27 @@
 #ifndef TABLESCHEMA_H
 #define TABLESCHEMA_H
 
-#include <string.h>
+#include <string>
+#include <vector>
+#include "datatype.h"
 
-class tableSchema {
+using namespace std;
+
+struct tableSchema{
+    string name;
+    vector<string> colname;
+    vector<string> coltyp;
+    uint64 coln;
+};
+
+class tableSchemaCache {
 
 private:
     
 public:
-    tableSchema();
-    tableSchema(const tableSchema& orig);
-    virtual ~tableSchema();
+    tableSchemaCache();
+    tableSchemaCache(const tableSchema& orig);
+    virtual ~tableSchemaCache();
 
     
 

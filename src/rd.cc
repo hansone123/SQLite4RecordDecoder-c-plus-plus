@@ -256,7 +256,7 @@ void TypChg::varintWrite32(uchar *z, unsigned int y){
   z[3] = (unsigned char)(y);
 }
 int TypChg::DecodeNumericKey(
-        const char *aKey,       /* Input encoding */
+        const uchar *aKey,       /* Input encoding */
         uint64 nKey,                   /* Number of bytes in aKey[] */
         real &pVal              /* Write the result here */
 ){

@@ -13,12 +13,13 @@
 
 #include "tableSchema.h"
 
-tableSchema::tableSchema() {
+
+tableSchemaCache::tableSchemaCache() {
 }
 
-tableSchema::tableSchema(const tableSchema& orig) {
+tableSchemaCache::tableSchemaCache(const tableSchema& orig) {
 }
 
-tableSchema::~tableSchema() {
+tableSchemaCache::~tableSchemaCache() {
 }
 
