@@ -28,11 +28,14 @@ void show(char *z, int n);
 int main(int argc, char** argv) {
     using namespace std;
     
+    string path;
+    cout<<"Plz input database path:";
+    cin>>path;
     //create leveldb
     leveldb::DB* db;
     leveldb::Options options;
     options.create_if_missing = true;
-    leveldb::Status status = leveldb::DB::Open(options, "./testdb", &db);
+    leveldb::Status status = leveldb::DB::Open(options, "./" + path, &db);
     assert(status.ok());
     
     //Get every kv

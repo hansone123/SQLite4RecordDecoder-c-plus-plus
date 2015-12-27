@@ -40,6 +40,8 @@
       </df>
       <df name="testdb">
       </df>
+      <df name="testDB2">
+      </df>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

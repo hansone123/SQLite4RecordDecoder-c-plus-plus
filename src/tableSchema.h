@@ -30,8 +30,10 @@ struct tableSchema{
 class tableSchemaCache {
 
 private:
+    vector<tableSchema> schemaCache;
     
 public:
+    
     tableSchemaCache();
     tableSchemaCache(const tableSchema& orig);
     virtual ~tableSchemaCache();
